@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leeruibin.github.io/avatarforever-project-page/sitemap.xml
