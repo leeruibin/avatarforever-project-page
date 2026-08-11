@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Avatar-Forever enables high-quality, real-time, effectively unbounded audio-driven avatar generation through decoupled parallel training, Recovery-oriented Rollout Training, and ForeverCache."
+      content="Avatar-Forever enables high-quality, real-time, long-horizon audio-driven avatar generation through decoupled training, Recovery-oriented Rollout Training, and ForeverCache."
     />
-    <meta name="theme-color" content="#090a0f" />
+    <meta name="theme-color" content="#07090f" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Avatar-Forever" />
     <meta
       property="og:description"
-      content="Decoupled parallel training for high-quality real-time infinite avatars."
+      content="Decoupled parallel training for high-quality, real-time, infinite avatars."
     />
     <meta property="og:url" content="https://leeruibin.github.io/avatarforever-project-page/" />
     <meta
@@ -23,7 +23,7 @@
     <meta name="twitter:title" content="Avatar-Forever" />
     <meta
       name="twitter:description"
-      content="High-quality real-time infinite audio-driven avatars."
+      content="High-quality, real-time, infinite audio-driven avatars."
     />
     <meta
       name="twitter:image"
@@ -32,35 +32,33 @@
     <link rel="canonical" href="https://leeruibin.github.io/avatarforever-project-page/" />
     <title>Avatar-Forever — Real-Time Infinite Avatars</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
       <a class="brand" href="#top" aria-label="Avatar-Forever home">
-        <span class="brand-mark" aria-hidden="true">AF</span>
+        <img class="brand-mark-image" src="assets/avatar-forever-mark.png" alt="" />
         <span>Avatar-Forever</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#videos">Videos</a>
+        <a href="#showcase">Showcase</a>
+        <a href="#comparisons">Comparisons</a>
+        <a href="#extended">Extended</a>
         <a href="#method">Method</a>
-        <a href="#results">Results</a>
-        <a href="#authors">Authors</a>
       </nav>
     </header>
 
     <main id="main">
       <section class="hero" id="top">
-        <div class="hero-glow hero-glow-red" aria-hidden="true"></div>
-        <div class="hero-glow hero-glow-violet" aria-hidden="true"></div>
-
         <div class="hero-copy">
-          <p class="eyebrow"><span></span> Research preview</p>
-          <h1>High-quality avatars.<br /><em>Real time. Forever.</em></h1>
+          <p class="eyebrow"><span></span> Project page</p>
+          <h1>Real-time avatars.<br /><em>Built for the long horizon.</em></h1>
           <p class="hero-lede">
-            Avatar-Forever decouples few-step efficiency from long-horizon robustness,
-            enabling effectively unbounded audio-driven avatar generation without the
-            fragile sequential training pipeline.
+            Avatar-Forever decouples few-step generation from long-horizon robustness,
+            enabling high-quality, effectively unbounded audio-driven avatar generation
+            on a single GPU.
           </p>
           <div class="hero-actions">
             <a
@@ -68,27 +66,36 @@
               href="https://github.com/leeruibin/avatarforever"
               target="_blank"
               rel="noreferrer"
-            >
-              Code repository <span aria-hidden="true">↗</span>
-            </a>
-            <a class="button button-secondary" href="#videos">Watch demos <span aria-hidden="true">↓</span></a>
+            >Code repository <span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="#showcase">Explore results <span aria-hidden="true">↓</span></a>
           </div>
-          <p class="release-note">Paper, code, checkpoints, and demos are being prepared for release.</p>
+          <div class="hero-metrics" aria-label="Headline results">
+            <div><strong>27.2</strong><span>FPS end-to-end</span></div>
+            <div><strong>768 × 512</strong><span>output resolution</span></div>
+            <div><strong>22B</strong><span>video backbone</span></div>
+          </div>
         </div>
 
-        <div class="hero-panel" aria-label="Headline performance">
-          <div class="live-pill"><span></span> Single-GPU real-time generation</div>
-          <div class="headline-stat">
-            <strong>27.2</strong>
-            <span>FPS</span>
-          </div>
-          <p>End-to-end throughput, including DiT inference and VAE decoding.</p>
-          <dl class="mini-stats">
-            <div><dt>Resolution</dt><dd>768 × 512</dd></div>
-            <div><dt>Hardware</dt><dd>1× H100</dd></div>
-            <div><dt>Backbone</dt><dd>22B</dd></div>
-          </dl>
-        </div>
+        <article class="hero-media">
+          <button
+            class="media-launch media-launch-hero"
+            type="button"
+            data-video-src="assets/videos/extended/11min_longervideo.mp4"
+            data-poster-src="assets/posters/extended/11min_longervideo.jpg"
+            aria-label="Play the featured eleven-minute continuous inference result"
+          >
+            <img
+              src="assets/posters/extended/11min_longervideo.jpg"
+              alt="Preview of the eleven-minute continuous Avatar-Forever inference result"
+            />
+            <span class="play-button" aria-hidden="true">▶</span>
+            <span class="media-overlay">
+              <span class="media-kicker">Extended inference result</span>
+              <strong>11 minutes, one continuous rollout</strong>
+              <small>11:44 · click to play with audio</small>
+            </span>
+          </button>
+        </article>
       </section>
 
       <section class="authors" id="authors" aria-label="Authors">
@@ -100,51 +107,85 @@
           <span>Shilei Wen<sup>2</sup></span>
           <span>Lei Zhang<sup>1,*</sup></span>
         </div>
-        <p><sup>1</sup> The Hong Kong Polytechnic University &nbsp;·&nbsp; <sup>2</sup> ByteDance &nbsp;·&nbsp; <sup>3</sup> AMD</p>
-        <small><sup>†</sup> Work done during an internship at ByteDance. &nbsp; <sup>*</sup> Corresponding author.</small>
+        <p><sup>1</sup> The Hong Kong Polytechnic University <i>·</i> <sup>2</sup> ByteDance <i>·</i> <sup>3</sup> AMD</p>
+        <small><sup>†</sup> Work done during an internship at ByteDance. <i>·</i> <sup>*</sup> Corresponding author.</small>
       </section>
 
-      <section class="section" id="videos">
+      <section class="section showcase-section" id="showcase">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">Demo gallery</p>
-            <h2>See Avatar-Forever in motion</h2>
+            <p class="section-kicker">Model showcase</p>
+            <h2>One model, diverse performances</h2>
           </div>
-          <p>Video results will be added here as soon as the release assets are ready.</p>
+          <p>
+            Explore 67 inference results across talking, emotion, cinematic shots,
+            singing, conversation, animals, and general scenes. Videos load only when played.
+          </p>
         </div>
 
-        <div class="video-grid">
-          <article class="video-placeholder video-placeholder-red">
-            <div class="placeholder-content">
-              <span class="play-mark" aria-hidden="true">▶</span>
-              <span class="coming-soon">Video coming soon</span>
-            </div>
-            <div class="video-caption">
-              <h3>Long-horizon generation</h3>
-              <p>Identity, appearance, and motion consistency over extended rollouts.</p>
-            </div>
-          </article>
-          <article class="video-placeholder video-placeholder-violet">
-            <div class="placeholder-content">
-              <span class="play-mark" aria-hidden="true">▶</span>
-              <span class="coming-soon">Video coming soon</span>
-            </div>
-            <div class="video-caption">
-              <h3>Audio-driven avatars</h3>
-              <p>Expressive facial dynamics, coherent motion, and synchronized speech.</p>
-            </div>
-          </article>
-          <article class="video-placeholder video-placeholder-gold">
-            <div class="placeholder-content">
-              <span class="play-mark" aria-hidden="true">▶</span>
-              <span class="coming-soon">Video coming soon</span>
-            </div>
-            <div class="video-caption">
-              <h3>Real-time interaction</h3>
-              <p>Streaming generation designed for responsive digital-human applications.</p>
-            </div>
-          </article>
+        <div class="category-tabs" id="showcase-tabs" role="tablist" aria-label="Showcase categories"></div>
+        <div class="general-note" id="general-note" hidden>
+          <span class="note-mark" aria-hidden="true">↗</span>
+          <div>
+            <h3>Beyond avatar-centric content</h3>
+            <p>
+              As observed in our conclusion, the same long-horizon training recipe can transfer
+              to general streaming video generation. These early cases are encouraging; we are
+              continuing to improve visual fidelity, motion, and robustness in general scenes.
+            </p>
+          </div>
         </div>
+        <div class="video-grid showcase-grid" id="showcase-grid" aria-live="polite"></div>
+        <p class="gallery-status" id="showcase-status">Loading the video library…</p>
+      </section>
+
+      <section class="section comparisons-section" id="comparisons">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Side-by-side evaluation</p>
+            <h2>Comparison results</h2>
+          </div>
+          <p>
+            Matched cases compare Avatar-Forever and Avatar-Forever with ForeverCache
+            against representative audio-driven avatar baselines.
+          </p>
+        </div>
+
+        <div class="comparison-block">
+          <div class="comparison-header">
+            <div>
+              <span class="index-label">01</span>
+              <h3>Short-video comparison</h3>
+            </div>
+            <div class="case-tabs" id="short-tabs" role="tablist" aria-label="Short-video cases"></div>
+          </div>
+          <div class="video-grid comparison-grid" id="short-grid" aria-live="polite"></div>
+        </div>
+
+        <div class="comparison-block">
+          <div class="comparison-header">
+            <div>
+              <span class="index-label">02</span>
+              <h3>Long-video comparison</h3>
+            </div>
+            <div class="case-tabs" id="long-tabs" role="tablist" aria-label="Long-video cases"></div>
+          </div>
+          <div class="video-grid comparison-grid" id="long-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section extended-section" id="extended">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Extended generation</p>
+            <h2>11 minutes, one continuous rollout</h2>
+          </div>
+          <p>
+            An extended result demonstrates the model’s behavior well beyond the short clips
+            commonly used for evaluating audio-driven avatars.
+          </p>
+        </div>
+        <div id="extended-video" class="extended-video"></div>
       </section>
 
       <section class="section method-section" id="method">
@@ -177,7 +218,7 @@
             <span class="method-number">03</span>
             <div class="method-icon cache" aria-hidden="true"></div>
             <h3>ForeverCache</h3>
-            <p>Stable historical features are reused across denoising steps, eliminating redundant context computation.</p>
+            <p>Stable historical features are reused across denoising steps, reducing redundant context computation.</p>
           </article>
         </div>
       </section>
@@ -195,7 +236,7 @@
         <figure class="framework-figure">
           <img
             src="assets/overview.png"
-            alt="Avatar-Forever framework comparing sequential training with decoupled parallel efficiency and robustness branches plus ForeverCache."
+            alt="Avatar-Forever framework with parallel efficiency and robustness branches plus ForeverCache."
             loading="lazy"
           />
           <figcaption>Overview of the Avatar-Forever training and inference pipeline.</figcaption>
@@ -208,38 +249,52 @@
             <p class="section-kicker">At a glance</p>
             <h2>Built for practical streaming</h2>
           </div>
-          <p>Headline results reported by the current manuscript.</p>
+          <p>Headline results reported in the current manuscript.</p>
         </div>
         <div class="result-grid">
           <div class="result-card"><strong>27.2</strong><span>FPS end-to-end</span></div>
           <div class="result-card"><strong>23%</strong><span>ForeverCache speedup</span></div>
-          <div class="result-card"><strong>768×512</strong><span>Output resolution</span></div>
-          <div class="result-card"><strong>∞</strong><span>Streaming horizon</span></div>
+          <div class="result-card"><strong>768 × 512</strong><span>output resolution</span></div>
+          <div class="result-card"><strong>∞</strong><span>streaming horizon</span></div>
         </div>
-        <p class="results-note">Measured on a single NVIDIA H100 GPU. Full evaluation details will accompany the paper release.</p>
+        <p class="results-note">Measured on a single NVIDIA H100 GPU.</p>
       </section>
 
       <section class="release-banner">
-        <div>
-          <p class="section-kicker">Release roadmap</p>
-          <h2>More is on the way.</h2>
-          <p>We are preparing the paper, video demos, inference code, model checkpoints, and evaluation suite.</p>
+        <div class="release-copy">
+          <img
+            class="release-logo"
+            src="assets/avatar-forever-logo.png"
+            alt="Avatar-Forever — Infinite Avatars, Endless Stories"
+            loading="lazy"
+          />
+          <p class="section-kicker">Open-source release</p>
+          <h2>Follow the project.</h2>
+          <p>Paper, inference code, checkpoints, and evaluation details will be released through the project repository.</p>
         </div>
         <a
           class="button button-light"
           href="https://github.com/leeruibin/avatarforever"
           target="_blank"
           rel="noreferrer"
-        >Follow on GitHub <span aria-hidden="true">↗</span></a>
+        >View on GitHub <span aria-hidden="true">↗</span></a>
       </section>
     </main>
 
     <footer>
-      <div class="footer-brand">
-        <span class="brand-mark" aria-hidden="true">AF</span>
-        <div><strong>Avatar-Forever</strong><span>Real-time avatars, built for the long horizon.</span></div>
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img class="brand-mark-image" src="assets/avatar-forever-mark.png" alt="" loading="lazy" />
+          <div><strong>Avatar-Forever</strong><span>Real-time avatars, built for the long horizon.</span></div>
+        </div>
+        <p>PolyU VCLab · ByteDance · AMD</p>
       </div>
-      <p>PolyU VCLab · ByteDance · AMD</p>
+      <p class="audio-credit">
+        Audio acknowledgement: some audio materials are adapted from or created with reference to
+        <a href="https://large-performance-model.github.io/" target="_blank" rel="noreferrer">LPM</a>
+        and
+        <a href="https://www.longcatai.org/models/video-avatar" target="_blank" rel="noreferrer">LongCat-Video-Avatar</a>.
+      </p>
     </footer>
   </body>
 </html>
