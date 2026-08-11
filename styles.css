@@ -76,17 +76,7 @@ footer {
 
 .brand, .footer-brand { display: flex; align-items: center; gap: 12px; font-weight: 760; }
 
-.brand-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 11px;
-  background: linear-gradient(135deg, rgba(255,78,98,.25), rgba(155,131,255,.25));
-  font-size: 12px;
-  letter-spacing: .08em;
-}
+.brand-mark-image { width: 78px; height: 38px; object-fit: contain; }
 
 nav { display: flex; gap: 30px; color: var(--muted); font-size: 14px; }
 nav a { transition: color .2s ease; }
@@ -420,6 +410,8 @@ h1 em { color: var(--muted); font-style: normal; font-weight: 520; }
 
 .release-banner h2 { margin-bottom: 12px; }
 .release-banner p { max-width: 680px; color: #555a65; }
+.release-copy { min-width: 0; }
+.release-logo { width: min(330px, 72vw); height: auto; margin: 0 0 28px; }
 .button-light { flex: 0 0 auto; border-color: rgba(0,0,0,.18); color: #11131a; }
 
 footer { padding: 60px 0 34px; }
