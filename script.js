@@ -21,6 +21,51 @@ const METHOD_META = {
 
 const METHOD_ORDER = ["our", "our_cache", "inftalk", "liveavatar", "omni", "soulx"];
 
+const HERO_CASES = [
+  {
+    title: "Talking · Case 06",
+    category: "Talking performance",
+    src: "assets/videos/good_cases/talk/sample_0032__14.mp4",
+    poster: "assets/posters/good_cases/talk/sample_0032__14.jpg",
+    duration: 9.2,
+  },
+  {
+    title: "Emotion · Case 01",
+    category: "Expressive performance",
+    src: "assets/videos/good_cases/emotion/sample_0127__speak_Gratitude_da9c.mp4",
+    poster: "assets/posters/good_cases/emotion/sample_0127__speak_Gratitude_da9c.jpg",
+    duration: 9.64,
+  },
+  {
+    title: "Cinematic · Case 02",
+    category: "Cinematic portrait",
+    src: "assets/videos/good_cases/movie_shot/sample_0117__cry_md0001.mp4",
+    poster: "assets/posters/good_cases/movie_shot/sample_0117__cry_md0001.jpg",
+    duration: 12.2,
+  },
+  {
+    title: "Singing · Case 05",
+    category: "Singing performance",
+    src: "assets/videos/good_cases/sing/sample_0024__7.mp4",
+    poster: "assets/posters/good_cases/sing/sample_0024__7.jpg",
+    duration: 13.68,
+  },
+  {
+    title: "Animal · Case 04",
+    category: "Non-human subject",
+    src: "assets/videos/good_cases/animal/sample_0005__5.mp4",
+    poster: "assets/posters/good_cases/animal/sample_0005__5.jpg",
+    duration: 13.16,
+  },
+];
+
+const heroState = {
+  index: 0,
+  timer: null,
+  videoActive: false,
+  reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+};
+
 const state = {
   manifest: [],
   showcaseCategory: "talk",
@@ -33,6 +78,74 @@ function formatDuration(seconds) {
   const minutes = Math.floor(rounded / 60);
   const remainder = rounded % 60;
   return minutes ? `${minutes}:${String(remainder).padStart(2, "0")}` : `${remainder}s`;
+}
+
+function stopHeroRotation() {
+  if (heroState.timer) window.clearInterval(heroState.timer);
+  heroState.timer = null;
+}
+
+function startHeroRotation() {
+  stopHeroRotation();
+  if (heroState.reducedMotion || heroState.videoActive || document.hidden) return;
+  heroState.timer = window.setInterval(() => {
+    showHeroCase(heroState.index + 1, false);
+  }, 6500);
+}
+
+function renderHeroDots() {
+  const container = document.querySelector("#hero-carousel-dots");
+  container.replaceChildren();
+  HERO_CASES.forEach((item, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "carousel-dot";
+    dot.setAttribute("aria-label", `Show ${item.title}`);
+    dot.setAttribute("aria-current", String(index === heroState.index));
+    dot.addEventListener("click", () => showHeroCase(index, true));
+    container.append(dot);
+  });
+}
+
+function showHeroCase(index, restartRotation = true) {
+  heroState.index = (index + HERO_CASES.length) % HERO_CASES.length;
+  heroState.videoActive = false;
+  const item = HERO_CASES[heroState.index];
+  document.querySelector("#hero-carousel-stage").innerHTML = `
+    <button
+      class="media-launch media-launch-hero"
+      type="button"
+      data-video-src="${item.src}"
+      data-poster-src="${item.poster}"
+      aria-label="Play ${item.title}"
+    >
+      <img src="${item.poster}" alt="Preview of ${item.title}" />
+      <span class="play-button" aria-hidden="true">▶</span>
+      <span class="media-overlay">
+        <span class="media-kicker">Featured inference · ${heroState.index + 1} of ${HERO_CASES.length}</span>
+        <strong>${item.title}</strong>
+        <small>${item.category} · ${formatDuration(item.duration)} · click to play with audio</small>
+      </span>
+    </button>`;
+  renderHeroDots();
+  if (restartRotation) startHeroRotation();
+}
+
+function initializeHeroCarousel() {
+  const carousel = document.querySelector("#hero-carousel");
+  document.querySelector("#hero-carousel-prev").addEventListener("click", () => showHeroCase(heroState.index - 1));
+  document.querySelector("#hero-carousel-next").addEventListener("click", () => showHeroCase(heroState.index + 1));
+  carousel.addEventListener("pointerenter", stopHeroRotation);
+  carousel.addEventListener("pointerleave", startHeroRotation);
+  carousel.addEventListener("focusin", stopHeroRotation);
+  carousel.addEventListener("focusout", (event) => {
+    if (!carousel.contains(event.relatedTarget)) startHeroRotation();
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopHeroRotation();
+    else startHeroRotation();
+  });
+  showHeroCase(0);
 }
 
 function mediaButton(item, label, extraClass = "") {
@@ -157,6 +270,10 @@ function renderExtended() {
 }
 
 function activateVideo(button) {
+  if (button.closest("#hero-carousel")) {
+    heroState.videoActive = true;
+    stopHeroRotation();
+  }
   const video = document.createElement("video");
   video.controls = true;
   video.autoplay = true;
@@ -197,4 +314,5 @@ document.addEventListener("click", (event) => {
   if (launchButton) activateVideo(launchButton);
 });
 
+initializeHeroCarousel();
 initialize();

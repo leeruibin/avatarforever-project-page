@@ -76,25 +76,16 @@
           </div>
         </div>
 
-        <article class="hero-media">
-          <button
-            class="media-launch media-launch-hero"
-            type="button"
-            data-video-src="assets/videos/extended/11min_longervideo.mp4"
-            data-poster-src="assets/posters/extended/11min_longervideo.jpg"
-            aria-label="Play the featured eleven-minute continuous inference result"
-          >
-            <img
-              src="assets/posters/extended/11min_longervideo.jpg"
-              alt="Preview of the eleven-minute continuous Avatar-Forever inference result"
-            />
-            <span class="play-button" aria-hidden="true">▶</span>
-            <span class="media-overlay">
-              <span class="media-kicker">Extended inference result</span>
-              <strong>11 minutes, one continuous rollout</strong>
-              <small>11:44 · click to play with audio</small>
-            </span>
-          </button>
+        <article
+          class="hero-media hero-carousel"
+          id="hero-carousel"
+          aria-label="Featured Avatar-Forever inference results"
+          aria-roledescription="carousel"
+        >
+          <div class="hero-carousel-stage" id="hero-carousel-stage" aria-live="off"></div>
+          <button class="carousel-control carousel-control-prev" id="hero-carousel-prev" type="button" aria-label="Previous featured result">←</button>
+          <button class="carousel-control carousel-control-next" id="hero-carousel-next" type="button" aria-label="Next featured result">→</button>
+          <div class="carousel-dots" id="hero-carousel-dots" role="group" aria-label="Choose a featured result"></div>
         </article>
       </section>
 

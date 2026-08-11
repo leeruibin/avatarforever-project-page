@@ -207,6 +207,65 @@ h1 em { color: var(--muted); font-style: normal; font-weight: 520; }
 .media-launch-hero, .media-launch-hero img, .hero-media video { height: 100%; }
 .hero-media video { object-fit: contain; background: #000; }
 
+.hero-carousel-stage { height: 100%; }
+.hero-carousel-stage .media-launch { animation: hero-reveal .42s ease both; }
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid rgba(255,255,255,.34);
+  border-radius: 50%;
+  background: rgba(8,10,16,.55);
+  color: var(--ink);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.carousel-control:hover { transform: translateY(-50%) scale(1.06); border-color: rgba(255,255,255,.62); background: rgba(8,10,16,.78); }
+.carousel-control-prev { left: 16px; }
+.carousel-control-next { right: 16px; }
+
+.carousel-dots {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transform: translateX(-50%);
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 999px;
+  background: rgba(8,10,16,.48);
+  backdrop-filter: blur(12px);
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.42);
+  cursor: pointer;
+  transition: width .25s ease, background .25s ease;
+}
+
+.carousel-dot[aria-current="true"] { width: 24px; background: var(--ink); }
+
+@keyframes hero-reveal {
+  from { opacity: .3; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 .play-button {
   position: absolute;
   top: 50%;
@@ -440,6 +499,9 @@ footer { padding: 60px 0 34px; }
   .hero { min-height: auto; padding: 58px 0 48px; }
   .hero-metrics { grid-template-columns: 1fr; }
   .hero-media { aspect-ratio: 4 / 3; }
+  .carousel-control { width: 38px; height: 38px; }
+  .carousel-control-prev { left: 10px; }
+  .carousel-control-next { right: 10px; }
   .section { padding: 78px 0; }
   .section-heading { margin-bottom: 32px; }
   .showcase-grid, .comparison-grid { grid-template-columns: 1fr; }
