@@ -287,18 +287,18 @@ function activateVideo(button) {
 }
 
 function showLoadError() {
-  const message = "The video library could not be loaded. Serve this folder through a local web server or open the published GitHub Pages URL.";
+  const message = "The video library could not be displayed. Please refresh the page.";
   ["#showcase-grid", "#short-grid", "#long-grid", "#extended-video"].forEach((selector) => {
     document.querySelector(selector).innerHTML = `<div class="error-card">${message}</div>`;
   });
   document.querySelector("#showcase-status").textContent = "Video library unavailable.";
 }
 
-async function initialize() {
+function initialize() {
   try {
-    const response = await fetch("assets/videos/manifest.json");
-    if (!response.ok) throw new Error(`Video manifest request failed: ${response.status}`);
-    state.manifest = await response.json();
+    const library = document.querySelector("#video-library-data");
+    if (!library) throw new Error("Embedded video library is missing");
+    state.manifest = JSON.parse(library.textContent);
     renderShowcase();
     renderComparison("short_comparisons", state.shortCase, "#short-tabs", "#short-grid", "shortCase");
     renderComparison("long_comparisons", state.longCase, "#long-tabs", "#long-grid", "longCase");
