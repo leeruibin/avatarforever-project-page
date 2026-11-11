@@ -108,15 +108,15 @@
               <button type="button" class="tab-button" data-seconds="600" aria-pressed="false">10 minutes</button>
             </div>
           </div>
-          <p class="comparison-note">Each option plays the same case from the start. Use the shared timeline to compare the three methods at the same point.</p>
+          <p class="comparison-note">Click a video to play it on its own, or choose Play all for synchronized playback. The duration applies to either mode.</p>
           <div class="video-grid comparison-grid" id="rebuttal-long-grid"></div>
           <div class="comparison-transport" id="rebuttal-transport" hidden>
-            <button type="button" class="tab-button" id="rebuttal-play">Play comparison</button>
+            <button type="button" class="tab-button" id="rebuttal-play">Play all</button>
             <div class="comparison-timeline">
               <input type="range" id="rebuttal-seek" aria-label="Comparison timeline" min="0" max="60" step="0.1" value="0" />
               <span id="rebuttal-time">0:00 / 1:00</span>
             </div>
-            <label class="comparison-audio">Audio <select id="rebuttal-audio"></select></label>
+            <label class="comparison-audio">Audio for Play all <select id="rebuttal-audio"></select></label>
           </div>
           <p class="comparison-note" id="rebuttal-playback-status" role="status" hidden></p>
         </div>
