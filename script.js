@@ -308,14 +308,12 @@ function renderRebuttal() {
 
   const cards = Array.from(grid.querySelectorAll(".rebuttal-media"));
   const videos = Array.from(grid.querySelectorAll("video"));
-  const lengths = document.querySelectorAll("#rebuttal-lengths button");
   const play = document.querySelector("#rebuttal-play");
   const seek = document.querySelector("#rebuttal-seek");
   const time = document.querySelector("#rebuttal-time");
   const audio = document.querySelector("#rebuttal-audio");
   const status = document.querySelector("#rebuttal-playback-status");
-  const maxDuration = Math.min(...items.map((item) => item.duration));
-  let limit = Math.min(60, maxDuration);
+  const limit = Math.min(600, ...items.map((item) => item.duration));
   let position = 0;
   let playing = false;
   let attempt = 0;
@@ -386,14 +384,6 @@ function renderRebuttal() {
     status.hidden = false;
   }
 
-  lengths.forEach((button) => button.addEventListener("click", () => {
-    pause();
-    selectVideos([]);
-    limit = Math.min(Number(button.dataset.seconds), maxDuration);
-    lengths.forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
-    seek.max = limit;
-    jump(0);
-  }));
   seek.max = limit;
   seek.addEventListener("input", () => {
     pause();

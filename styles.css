@@ -356,7 +356,7 @@ h1 em { color: var(--muted); font-style: normal; font-weight: 520; }
 }
 
 .tab-button:hover { color: var(--ink); border-color: rgba(255,255,255,.26); }
-.tab-button[aria-selected="true"], .tab-button[aria-pressed="true"] { border-color: rgba(255,78,98,.5); background: rgba(255,78,98,.13); color: var(--ink); }
+.tab-button[aria-selected="true"] { border-color: rgba(255,78,98,.5); background: rgba(255,78,98,.13); color: var(--ink); }
 .tab-count { margin-left: 5px; color: #777d8a; font-variant-numeric: tabular-nums; }
 
 .general-note {

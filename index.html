@@ -83,7 +83,7 @@
             <p class="section-kicker">Rebuttal materials</p>
             <h2>Additional video evaluations</h2>
           </div>
-          <p>Compare training strategies and inspect one long-horizon case at three viewing lengths.</p>
+          <p>Compare training strategies and watch a continuous 10-minute comparison.</p>
         </div>
 
         <div class="comparison-block">
@@ -102,19 +102,14 @@
               <span class="index-label">02</span>
               <h3 id="rebuttal-long-title">10-minute comparison</h3>
             </div>
-            <div class="case-tabs" id="rebuttal-lengths" role="group" aria-label="Comparison playback length">
-              <button type="button" class="tab-button" data-seconds="60" aria-pressed="true">1 minute</button>
-              <button type="button" class="tab-button" data-seconds="300" aria-pressed="false">5 minutes</button>
-              <button type="button" class="tab-button" data-seconds="600" aria-pressed="false">10 minutes</button>
-            </div>
           </div>
-          <p class="comparison-note">Click a video to play it on its own, or choose Play all for synchronized playback. The duration applies to either mode.</p>
+          <p class="comparison-note">Click a video to play it on its own, or choose Play all for synchronized playback. Use the timeline to jump to any point in the comparison.</p>
           <div class="video-grid comparison-grid" id="rebuttal-long-grid"></div>
           <div class="comparison-transport" id="rebuttal-transport" hidden>
             <button type="button" class="tab-button" id="rebuttal-play">Play all</button>
             <div class="comparison-timeline">
-              <input type="range" id="rebuttal-seek" aria-label="Comparison timeline" min="0" max="60" step="0.1" value="0" />
-              <span id="rebuttal-time">0:00 / 1:00</span>
+              <input type="range" id="rebuttal-seek" aria-label="Comparison timeline" min="0" max="600" step="0.1" value="0" />
+              <span id="rebuttal-time">0:00 / 10:00</span>
             </div>
             <label class="comparison-audio">Audio for Play all <select id="rebuttal-audio"></select></label>
           </div>
