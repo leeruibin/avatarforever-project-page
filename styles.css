@@ -422,6 +422,7 @@ h1 em { color: var(--muted); font-style: normal; font-weight: 520; }
 .index-label { color: var(--red); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
 
 .comparison-note { color: var(--muted); font-size: 14px; }
+.video-card .rebuttal-media, .video-card .rebuttal-media img, .video-card .rebuttal-media video { aspect-ratio: 676 / 512; }
 .rebuttal-media [hidden] { display: none; }
 .rebuttal-media.is-playing:not(:hover):not(:focus-visible) .play-button { opacity: 0; }
 .comparison-audio select:disabled { opacity: .55; }

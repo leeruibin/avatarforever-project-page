@@ -1316,7 +1316,7 @@
     "src": "assets/videos/10min_compare/our.mp4",
     "poster": "assets/posters/10min_compare/our.jpg",
     "duration": 600.06,
-    "width": 768,
+    "width": 676,
     "height": 512
   },
   {
@@ -1328,7 +1328,7 @@
     "src": "assets/videos/10min_compare/our_cache.mp4",
     "poster": "assets/posters/10min_compare/our_cache.jpg",
     "duration": 600.06,
-    "width": 768,
+    "width": 676,
     "height": 512
   },
   {
@@ -1340,7 +1340,7 @@
     "src": "assets/videos/10min_compare/dmd_only.mp4",
     "poster": "assets/posters/10min_compare/dmd_only.jpg",
     "duration": 600.06,
-    "width": 768,
+    "width": 676,
     "height": 512
   },
   {
@@ -1352,7 +1352,7 @@
     "src": "assets/videos/10min_compare/soulx.mp4",
     "poster": "assets/posters/10min_compare/soulx.jpg",
     "duration": 600.0,
-    "width": 768,
+    "width": 676,
     "height": 512
   }
 ]
