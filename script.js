@@ -23,6 +23,7 @@ const METHOD_ORDER = ["our", "our_cache", "inftalk", "liveavatar", "omni", "soul
 
 const REBUTTAL_METHODS = {
   our: { label: "Avatar-Forever", detail: "Decoupled DMD + RRT" },
+  our_cache: { label: "Avatar-Forever + ForeverCache", detail: "Decoupled DMD + RRT with cache" },
   dmd_only: { label: "DMD only", detail: "Few-step distillation only" },
   fm_only: { label: "FM only", detail: "Flow matching only" },
   d2rrt: { label: "DMD → RRT", detail: "Sequential training" },
@@ -294,10 +295,10 @@ function renderRebuttal() {
     }))
     .join("");
 
-  const items = rebuttalItems("10min_compare", ["our", "dmd_only", "soulx"]);
+  const items = rebuttalItems("10min_compare", ["our", "our_cache", "dmd_only", "soulx"]);
   const grid = document.querySelector("#rebuttal-long-grid");
   grid.innerHTML = items.map((item) => `
-    <article class="video-card${item.method === "our" ? " is-ours" : ""}">
+    <article class="video-card${METHOD_META[item.method]?.ours ? " is-ours" : ""}">
       <button type="button" class="media-launch rebuttal-media" aria-label="Play ${item.label} only">
         <img src="${item.poster}" alt="" loading="lazy" />
         <video poster="${item.poster}" preload="none" playsinline hidden></video>

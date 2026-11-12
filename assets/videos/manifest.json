@@ -1323,6 +1323,18 @@
     "group": "10min_compare",
     "category": "10min_compare",
     "case": null,
+    "method": "our_cache",
+    "file": "our_cache",
+    "src": "assets/videos/10min_compare/our_cache.mp4",
+    "poster": "assets/posters/10min_compare/our_cache.jpg",
+    "duration": 600.06,
+    "width": 768,
+    "height": 512
+  },
+  {
+    "group": "10min_compare",
+    "category": "10min_compare",
+    "case": null,
     "method": "dmd_only",
     "file": "dmd_only",
     "src": "assets/videos/10min_compare/dmd_only.mp4",

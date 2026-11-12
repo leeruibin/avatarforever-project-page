@@ -378,6 +378,7 @@ h1 em { color: var(--muted); font-style: normal; font-weight: 520; }
 .video-grid { display: grid; gap: 18px; }
 .showcase-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .comparison-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.rebuttal-long-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
 .video-card {
   overflow: hidden;
