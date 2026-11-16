@@ -23,6 +23,7 @@ const METHOD_ORDER = ["our", "our_cache", "inftalk", "liveavatar", "omni", "soul
 
 const REBUTTAL_METHODS = {
   our: { label: "Avatar-Forever", detail: "Decoupled DMD + RRT" },
+  our_cache: { label: "Avatar-Forever + ForeverCache", detail: "Decoupled DMD + RRT with cache" },
   dmd_only: { label: "DMD only", detail: "Few-step distillation only" },
   fm_only: { label: "FM only", detail: "Flow matching only" },
   d2rrt: { label: "DMD → RRT", detail: "Sequential training" },
@@ -294,27 +295,30 @@ function renderRebuttal() {
     }))
     .join("");
 
-  const items = rebuttalItems("10min_compare", ["our", "dmd_only", "soulx"]);
+  const items = rebuttalItems("10min_compare", ["our", "our_cache", "dmd_only", "soulx"]);
   const grid = document.querySelector("#rebuttal-long-grid");
   grid.innerHTML = items.map((item) => `
-    <article class="video-card${item.method === "our" ? " is-ours" : ""}">
-      <video poster="${item.poster}" preload="none" playsinline aria-label="${item.label} comparison"></video>
+    <article class="video-card${METHOD_META[item.method]?.ours ? " is-ours" : ""}">
+      <button type="button" class="media-launch rebuttal-media" aria-label="Play ${item.label} only">
+        <img src="${item.poster}" alt="" loading="lazy" />
+        <video poster="${item.poster}" preload="none" playsinline hidden></video>
+        <span class="play-button" aria-hidden="true">▶</span>
+      </button>
       <div class="video-caption"><div><h3>${item.label}</h3><p>${item.detail}</p></div></div>
     </article>`).join("");
 
+  const cards = Array.from(grid.querySelectorAll(".rebuttal-media"));
   const videos = Array.from(grid.querySelectorAll("video"));
-  const lengths = document.querySelectorAll("#rebuttal-lengths button");
   const play = document.querySelector("#rebuttal-play");
   const seek = document.querySelector("#rebuttal-seek");
   const time = document.querySelector("#rebuttal-time");
   const audio = document.querySelector("#rebuttal-audio");
   const status = document.querySelector("#rebuttal-playback-status");
-  const maxDuration = Math.min(...items.map((item) => item.duration));
-  let limit = Math.min(60, maxDuration);
+  const limit = Math.min(600, ...items.map((item) => item.duration));
   let position = 0;
   let playing = false;
   let attempt = 0;
-  let loaded = false;
+  let active = [];
   audio.replaceChildren(...items.map((item, index) => new Option(item.label, index)), new Option("Muted", -1));
 
   function clock(seconds) {
@@ -329,35 +333,58 @@ function renderRebuttal() {
     seek.setAttribute("aria-valuetext", time.textContent);
   }
 
+  function updateControls() {
+    play.textContent = playing && active.length > 1 ? "Pause all" : "Play all";
+    audio.disabled = active.length === 1;
+    cards.forEach((card, index) => {
+      const soloPlaying = playing && active.length === 1 && active[0] === index;
+      card.setAttribute("aria-label", soloPlaying ? `Pause ${items[index].label}` : `Play ${items[index].label} only`);
+      card.classList.toggle("is-playing", playing && active.includes(index));
+      card.querySelector(".play-button").textContent = soloPlaying ? "❚❚" : "▶";
+    });
+  }
+
   function pause() {
     attempt += 1;
     playing = false;
     videos.forEach((video) => video.pause());
-    play.textContent = "Play comparison";
+    updateControls();
   }
 
   function jump(seconds) {
     updateTimeline(seconds);
-    if (loaded) videos.forEach((video) => { video.currentTime = position; });
+    active.forEach((index) => { videos[index].currentTime = position; });
   }
 
   function setAudio() {
-    videos.forEach((video, index) => { video.muted = index !== Number(audio.value); });
+    const audibleIndex = active.length === 1 ? active[0] : Number(audio.value);
+    videos.forEach((video, index) => { video.muted = index !== audibleIndex; });
+  }
+
+  function selectVideos(indices) {
+    active = indices;
+    videos.forEach((video, index) => {
+      const selected = active.includes(index);
+      if (selected && (!video.hasAttribute("src") || video.error)) {
+        video.src = items[index].src;
+      } else if (!selected && video.hasAttribute("src")) {
+        video.removeAttribute("src");
+        video.load();
+      }
+      video.hidden = !selected;
+      cards[index].querySelector("img").hidden = selected;
+    });
+    updateControls();
   }
 
   function reportPlaybackError() {
     pause();
-    status.textContent = "Could not play all comparison videos. Reload this page and try again.";
+    status.textContent = active.length === 1
+      ? `Could not play ${items[active[0]].label}. Click the video to try again.`
+      : "Could not play all comparison videos. Try playing an individual video.";
     status.hidden = false;
   }
 
-  lengths.forEach((button) => button.addEventListener("click", () => {
-    pause();
-    limit = Math.min(Number(button.dataset.seconds), maxDuration);
-    lengths.forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
-    seek.max = limit;
-    jump(0);
-  }));
   seek.max = limit;
   seek.addEventListener("input", () => {
     pause();
@@ -366,13 +393,14 @@ function renderRebuttal() {
   audio.addEventListener("change", setAudio);
   videos.forEach((video, index) => {
     video.addEventListener("timeupdate", () => {
-      if (!playing) return;
+      if (!playing || !active.includes(index)) return;
       if (video.currentTime >= limit) {
         pause();
         jump(limit);
-      } else if (index === 0) {
+      } else if (index === active[0]) {
         updateTimeline(video.currentTime);
-        videos.slice(1).forEach((peer) => {
+        active.slice(1).forEach((peerIndex) => {
+          const peer = videos[peerIndex];
           if (peer.readyState >= 2 && !peer.seeking && Math.abs(peer.currentTime - position) > 0.5) {
             peer.currentTime = position;
           }
@@ -380,30 +408,37 @@ function renderRebuttal() {
       }
     });
     video.addEventListener("ended", () => {
-      if (!playing) return;
+      if (!playing || !active.includes(index)) return;
       pause();
       jump(Math.min(video.currentTime, limit));
     });
-    video.addEventListener("error", reportPlaybackError);
+    video.addEventListener("error", () => {
+      if (playing && active.includes(index)) reportPlaybackError();
+    });
   });
-  play.addEventListener("click", () => {
-    if (playing) {
-      pause();
-      return;
-    }
-    if (!loaded) {
-      videos.forEach((video, index) => { video.src = items[index].src; });
-      loaded = true;
-    }
+
+  function start(indices) {
+    pause();
+    selectVideos(indices);
     status.hidden = true;
     jump(position >= limit ? 0 : position);
     setAudio();
     playing = true;
-    play.textContent = "Pause comparison";
+    updateControls();
     const currentAttempt = ++attempt;
-    Promise.all(videos.map((video) => video.play())).catch(() => {
+    Promise.all(active.map((index) => videos[index].play())).catch(() => {
       if (currentAttempt === attempt) reportPlaybackError();
     });
+  }
+
+  cards.forEach((card, index) => card.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (playing && active.length === 1 && active[0] === index) pause();
+    else start([index]);
+  }));
+  play.addEventListener("click", () => {
+    if (playing && active.length > 1) pause();
+    else start(videos.map((_, index) => index));
   });
   updateTimeline(0);
   document.querySelector("#rebuttal-transport").hidden = false;
